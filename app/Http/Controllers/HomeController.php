@@ -22,12 +22,16 @@ class HomeController extends Controller
     }
 
     public function post($slug) {
-        $post = Post::where('slug', '=', $slug)->get();
+        $post = Post::where('slug', '=', $slug)->first();
         
         if(!$post) {
             abort('404');
         }
 
-        dd($post->title);
+        $data = [
+            'post' => $post
+        ];
+
+        return view('guest.posts.post', $data);
     }
 }
