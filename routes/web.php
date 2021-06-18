@@ -17,7 +17,7 @@ Auth::routes();
 
 // Route::prefix('admin')
 //     ->namespace('Admin')
-//     ->middelware('auth')
+//     ->middleware('auth')
 //     ->name('admin.')
 //     ->group(function() {
 
@@ -25,6 +25,17 @@ Auth::routes();
 
 //     }
 // );
+
+Route::prefix('admin')
+    ->namespace('Admin')
+    ->middleware('auth')
+    ->name('admin.')
+    ->group(function () {
+    Route::get('/', 'HomeController@index')
+
+    ->name('home');
+    }
+);
 
 Route::get('/', 'HomeController@index')->name('home');
 
