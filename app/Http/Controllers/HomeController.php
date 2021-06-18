@@ -20,4 +20,14 @@ class HomeController extends Controller
 
         return view('guest.posts.blog', $data);
     }
+
+    public function post($slug) {
+        $post = Post::where('slug', '=', $slug);
+        
+        if(!$post) {
+            abort('404');
+        }
+
+        dd($post->title);
+    }
 }

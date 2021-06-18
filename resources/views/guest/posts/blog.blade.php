@@ -14,7 +14,7 @@
                         <div class="card-body">
                           <h5 class="card-title">{{ ucfirst($post->title) }}</h5>
                           <p class="card-text">{{ substr($post->content, 0, 50) }}...</p>
-                          <a href="#" class="btn btn-primary">Leggi il post</a>
+                          <a href="{{ route('post', ['slug' => $post->slug]) }}" class="btn btn-primary">Leggi il post</a>
                         </div>
                       </div>
                 </div>
