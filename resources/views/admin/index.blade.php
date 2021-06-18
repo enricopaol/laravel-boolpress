@@ -18,6 +18,16 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>    
+
+    @section('tag_title')
+        Boolpress Home
+    @endsection
+
+    @section('content')
+        <div class="container text-center">
+            <a href="{{ route('admin.posts.index') }}" class="btn btn-primary">Gestisci i Post</a>
+        </div>
+    @endsection
 </div>
 @endsection
