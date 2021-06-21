@@ -8,7 +8,7 @@ use App\Post;
 class HomeController extends Controller
 {
     public function index() {
-        return view('guest.index');
+        return view('guest.home');
     }
 
     public function blog() {
@@ -18,10 +18,10 @@ class HomeController extends Controller
             'posts' => $posts
         ];
 
-        return view('guest.posts.blog', $data);
+        return view('guest.posts.index', $data);
     }
 
-    public function post($slug) {
+    public function show($slug) {
         $post = Post::where('slug', '=', $slug)->first();
         
         if(!$post) {
@@ -32,6 +32,6 @@ class HomeController extends Controller
             'post' => $post
         ];
 
-        return view('guest.posts.post', $data);
+        return view('guest.posts.show', $data);
     }
 }

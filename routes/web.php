@@ -43,4 +43,4 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/blog', 'HomeController@blog')->name('blog');
 
-Route::get('blog/{slug}', 'HomeController@post')->name('post');
+Route::get('blog/{slug}', 'HomeController@show')->name('show');

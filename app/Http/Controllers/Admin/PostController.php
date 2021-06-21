@@ -21,7 +21,7 @@ class PostController extends Controller
             'posts' => $posts
         ];
 
-        return view('admin.posts.blog', $data);
+        return view('admin.posts.index', $data);
     }
 
     /**
@@ -53,7 +53,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        dd($id);
     }
 
     /**
