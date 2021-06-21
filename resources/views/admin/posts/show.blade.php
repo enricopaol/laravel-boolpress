@@ -6,18 +6,27 @@
 
 @section('content')
     <div class="container">
+
         <div class="card">
             <div class="card-body">
-              <h1>{{ ucfirst($post->title) }}</h1>
 
-              <p>{{ $post->content }}</p>
+                <h1>{{ ucfirst($post->title) }}</h1>
 
-              <p><strong>Post slug: </strong>{{ $post->slug }}</p>
+                <p>{{ $post->content }}</p>
 
-              <a href="{{ route('admin.posts.edit', ['post' => $post->id]) }}" class="btn btn-primary">Modifica Post</a>
+                <p><strong>Post slug: </strong>{{ $post->slug }}</p>
 
-              {{-- <a href="#" class="btn btn-danger">Elimina Post</a> --}}
+                <a href="{{ route('admin.posts.edit', ['post' => $post->id]) }}" class="btn btn-primary">Modifica Post</a>
+
+                <form action="{{ route('admin.posts.destroy', ['post' => $post->id]) }}" method="post" style="display: inline-block"> 
+                    @csrf
+                    @method('DELETE')         
+
+                    <input type="submit" class="btn btn-danger" value="Elimina il Post">
+                </form>
+              
             </div>
-          </div>
+        </div>
+
     </div>
 @endsection

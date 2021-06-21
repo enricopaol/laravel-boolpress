@@ -6,6 +6,9 @@
 
 @section('content')
     <div class="container">
+
+        <h1 class="mb-4">Tutti i post</h1>
+
         <div class="row">
             
             @foreach ($posts as $post)

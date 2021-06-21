@@ -64,8 +64,7 @@ class PostController extends Controller
         $post_to_create->fill($new_post);        
         $post_to_create->save();
 
-        return redirect()->route('admin.posts.show', ['post' => $post_to_create->id]);
-        
+        return redirect()->route('admin.posts.show', ['post' => $post_to_create->id]);        
     }
 
     /**
@@ -139,8 +138,7 @@ class PostController extends Controller
 
         $old_post->update($modified_post);
 
-        return redirect()->route('admin.posts.show', ['post' => $old_post->id]);
-        
+        return redirect()->route('admin.posts.show', ['post' => $old_post->id]);        
     }
 
     /**
@@ -151,7 +149,11 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post_to_delete = Post::findOrFail($id);
+
+        $post_to_delete->delete();
+
+        return redirect()->route('admin.posts.index');
     }
 
     public function getValidationRules() {
