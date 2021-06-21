@@ -53,7 +53,13 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        dd($id);
+        $post = Post::findOrFail($id);
+
+        $data = [
+            'post' => $post
+        ];
+
+        return view('admin.posts.show', $data);
     }
 
     /**
@@ -64,7 +70,7 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        dd($id);
     }
 
     /**
