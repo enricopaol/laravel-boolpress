@@ -43,10 +43,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|max:255',
-            'content' => 'required|max:65000'
-        ]);
+        $request->validate($this->getValidationRules());
 
         $new_post = $request->all();
 
@@ -96,7 +93,13 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        dd($id);
+        $post = Post::findOrFail($id);
+
+        $data = [
+            'post' => $post
+        ];
+
+        return view('admin.posts.edit', $data);
     }
 
     /**
@@ -108,7 +111,36 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate($this->getValidationRules());
+
+        $modified_post = $request->all();
+
+        // Se il titolo del post non cambia, lo slug rimane lo stesso di prima
+        $old_post = Post::findOrFail($id);
+
+        $post_slug = Str::slug($modified_post['title'], '-');
+
+        // Se invece cambia, lo slug viene ricontrollato
+        if($old_post->title != $modified_post['title']) {
+            
+            $base_slug = $post_slug;
+            $existing_post_slug = Post::where('slug', '=', $post_slug)->first();
+            $counter = 1;
+
+            while($existing_post_slug) {
+                $post_slug = $base_slug . '-' . $counter;
+                $counter++;
+                $existing_post_slug = Post::where('slug', '=', $post_slug)->first();
+            }
+            
+        }
+
+        $modified_post['slug'] = $post_slug;        
+
+        $old_post->update($modified_post);
+
+        return redirect()->route('admin.posts.show', ['post' => $old_post->id]);
+        
     }
 
     /**
@@ -120,5 +152,12 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getValidationRules() {
+        return [
+            'title' => 'required|max:255',
+            'content' => 'required|max:65000'
+        ];
     }
 }
