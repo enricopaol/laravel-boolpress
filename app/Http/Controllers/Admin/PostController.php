@@ -44,7 +44,6 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $request->validate($this->getValidationRules());
-
         $new_post = $request->all();
 
         $post_slug = Str::slug($new_post['title'], '-');
@@ -111,12 +110,10 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate($this->getValidationRules());
-
         $modified_post = $request->all();
 
         // Se il titolo del post non cambia, lo slug rimane lo stesso di prima
         $old_post = Post::findOrFail($id);
-
         $post_slug = Str::slug($modified_post['title'], '-');
 
         // Se invece cambia, lo slug viene ricontrollato
@@ -135,7 +132,6 @@ class PostController extends Controller
         }
 
         $modified_post['slug'] = $post_slug;        
-
         $old_post->update($modified_post);
 
         return redirect()->route('admin.posts.show', ['post' => $old_post->id]);        
@@ -150,7 +146,6 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post_to_delete = Post::findOrFail($id);
-
         $post_to_delete->delete();
 
         return redirect()->route('admin.posts.index');
