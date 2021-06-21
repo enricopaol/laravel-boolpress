@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -49,10 +50,24 @@ class PostController extends Controller
 
         $new_post = $request->all();
 
-        
+        $post_slug = Str::slug($new_post['title'], '-');
+        $base_slug = $post_slug;
+        $existing_post_slug = Post::where('slug', '=', $post_slug)->first();
+        $counter = 1;
 
-        dd($new_post);
+        while($existing_post_slug) {
+            $post_slug = $base_slug . '-' . $counter;
+            $counter++;
+            $existing_post_slug = Post::where('slug', '=', $post_slug)->first();
+        }
 
+        $new_post['slug'] = $post_slug;
+
+        $post_to_create = new Post;
+        $post_to_create->fill($new_post);        
+        $post_to_create->save();
+
+        return redirect()->route('admin.posts.show', ['post' => $post_to_create->id]);
         
     }
 
