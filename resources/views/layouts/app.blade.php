@@ -31,7 +31,10 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a href="{{ route('blog') }}" class="nav-link">Blog</a>
+                            <a href="{{ route('index') }}" class="nav-link">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('categories.index') }}" class="nav-link">Categorie</a>
                         </li>
                     </ul>
 

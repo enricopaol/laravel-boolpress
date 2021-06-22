@@ -13,7 +13,7 @@
                 <strong>Categoria</strong>: 
                 
                 @if ($post_category)
-                   <a href="#">{{ $post_category->name }}</a> 
+                   <a href="{{ route('categories.show', ['slug' => $post_category->slug]) }}">{{ $post_category->name }}</a> 
                 @else
                     senza categoria 
                 @endif                 

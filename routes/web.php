@@ -15,17 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-// Route::prefix('admin')
-//     ->namespace('Admin')
-//     ->middleware('auth')
-//     ->name('admin.')
-//     ->group(function() {
-
-//         Route::get('/', 'HomeController@index')->name('home');
-
-//     }
-// );
-
 Route::prefix('admin')
     ->namespace('Admin')
     ->middleware('auth')
@@ -35,12 +24,15 @@ Route::prefix('admin')
         Route::get('/', 'HomeController@index')->name('home');
 
         Route::resource('posts', 'PostController');
-
+        
     }
 );
 
+// Route Pubbliche
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('/blog', 'HomeController@blog')->name('blog');
+Route::get('/blog', 'PostController@index')->name('index');
+Route::get('blog/{slug}', 'PostController@show')->name('show');
 
-Route::get('blog/{slug}', 'HomeController@show')->name('show');
+Route::get('/categories', 'CategoryController@index')->name('categories.index');
+Route::get('/categories/{slug}', 'CategoryController@show')->name('categories.show');
