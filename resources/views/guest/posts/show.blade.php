@@ -10,7 +10,8 @@
             <div class="card-body">
 
               <p>
-                Categoria: 
+                <strong>Categoria</strong>: 
+                
                 @if ($post_category)
                    <a href="#">{{ $post_category->name }}</a> 
                 @else

@@ -10,6 +10,16 @@
         <div class="card">
             <div class="card-body">
 
+                <p>
+                    <strong>Categoria</strong>: 
+                    
+                    @if ($post_category)
+                       <a href="#">{{ $post_category->name }}</a> 
+                    @else
+                        senza categoria 
+                    @endif                 
+                </p>
+
                 <h1>{{ ucfirst($post->title) }}</h1>
 
                 <p>{{ $post->content }}</p>
