@@ -15,7 +15,8 @@
                 <div class="col-4 mb-3">
                     <div class="card" style="width: 18rem;">
                         <div class="card-body">
-                          <h5 class="card-title">{{ ucfirst($category->name) }}</h5>                          
+                          <h5 class="card-title">{{ ucfirst($category->name) }}</h5>    
+                          <p>Totale ricette: {{ count($category->posts) }}</p>                      
                           <a href="{{ route('categories.show', ['slug' => $category->slug]) }}" class="btn btn-primary">Esplora Categoria</a>
                         </div>
                       </div>
