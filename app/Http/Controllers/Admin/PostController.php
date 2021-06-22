@@ -104,7 +104,7 @@ class PostController extends Controller
 
         $data = [
             'post' => $post,
-            'post_category' => $post->category,
+            'post_category_id' => $post->category ? $post->category->id : null,
             'categories' => $categories
         ];
 

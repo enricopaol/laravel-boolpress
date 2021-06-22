@@ -45,11 +45,10 @@
 
                         <option 
                         value="{{ $category->id }}"                         
-                        {{ $post_category && old('category_id', $post_category->id) == $category->id ? 'selected' : ''}}                     
+                        {{ old('category_id', $post_category_id) == $category->id ? 'selected' : ''}}                     
                         >
                             {{ $category->name }}
                         </option>
-
                         
                     @endforeach
                 </select>
