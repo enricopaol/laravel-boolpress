@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Post;
 use Illuminate\Support\Str;
 use App\Category;
+use App\Tag;
 
 class PostController extends Controller
 {
@@ -34,9 +35,11 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $tags = Tag::all();
      
         $data = [
-            'categories' => $categories
+            'categories' => $categories,
+            'tags' => $tags
         ];
 
         return view('admin.posts.create', $data);
@@ -51,7 +54,9 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $request->validate($this->getValidationRules());
-        $new_post = $request->all();     
+        $new_post = $request->all();  
+        
+        dd($new_post);
 
         $post_slug = Str::slug($new_post['title'], '-');
         $base_slug = $post_slug;
@@ -166,7 +171,8 @@ class PostController extends Controller
         return [
             'title' => 'required|max:255',
             'content' => 'required|max:65000',
-            'category_id' => 'nullable|exists:categories,id'
+            'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|array|exists:tags,id'
         ];
     }
 }

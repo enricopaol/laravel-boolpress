@@ -8,7 +8,7 @@
     <div class="container">
 
         <h1>Crea un nuovo Post</h1>
-        
+
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -44,6 +44,20 @@
                 </select>
             </div>
 
+            <div class="form-group">
+                <h6>Tags:</h6>
+               
+                @foreach ($tags as $tag)
+                    <div class="form-check">
+                        <input class="form-check-input" name="tags[]" type="checkbox" value="{{ $tag->id }}" id="checkbox-{{ $tag->id }}" {{ in_array($tag->id, old('tags', [])) ? 'checked' : ''}}>
+                        <label class="form-check-label" for="checkbox-{{ $tag->id }}">
+                            {{$tag->name}}
+                        </label>
+                    </div>   
+                @endforeach
+
+            </div>
+            
             <input type="submit" class="btn btn-success" value="Crea Post">
         </form>
     </div>
