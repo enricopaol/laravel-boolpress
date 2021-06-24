@@ -131,9 +131,7 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate($this->getValidationRules());
-        $modified_post = $request->all();
-
-        dd($modified_post);
+        $modified_post = $request->all();        
 
         // Se il titolo del post non cambia, lo slug rimane lo stesso di prima
         $old_post = Post::findOrFail($id);
@@ -157,6 +155,13 @@ class PostController extends Controller
         $modified_post['slug'] = $post_slug;        
         $old_post->update($modified_post);
 
+        // Tags Many to Many with Sync()
+        if(isset($modified_post['tags'])) {
+            $old_post->tags()->sync($modified_post['tags']);
+        } else {
+            $old_post->tags()->sync([]);
+        }
+
         return redirect()->route('admin.posts.show', ['post' => $old_post->id]);        
     }
 
@@ -169,6 +174,10 @@ class PostController extends Controller
     public function destroy($id)
     {
         $post_to_delete = Post::findOrFail($id);
+
+        // Per evitare righe orfane cancello prima tutte le istanze tag collegate al post
+        $post_to_delete->tags()->sync([]);
+
         $post_to_delete->delete();
 
         return redirect()->route('admin.posts.index');

@@ -22,8 +22,8 @@
 
                 <p>
                     <strong>Tags</strong>: 
-                                       
-                    @if ($post_tags)
+                    
+                    @if ($post_tags->isNotEmpty())                    
                         @foreach ($post_tags as $tag)
                             <a href="#">{{ $tag->name }}</a>{{ !$loop->last ? ', ' : ''}}
                         @endforeach                       
