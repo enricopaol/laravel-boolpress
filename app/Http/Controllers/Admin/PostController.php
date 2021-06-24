@@ -109,11 +109,13 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $categories = Category::all();
+        $tags = Tag::all();
 
         $data = [
             'post' => $post,
             'post_category_id' => $post->category ? $post->category->id : null,
-            'categories' => $categories
+            'categories' => $categories,
+            'tags' => $tags
         ];
 
         return view('admin.posts.edit', $data);
@@ -130,6 +132,8 @@ class PostController extends Controller
     {
         $request->validate($this->getValidationRules());
         $modified_post = $request->all();
+
+        dd($modified_post);
 
         // Se il titolo del post non cambia, lo slug rimane lo stesso di prima
         $old_post = Post::findOrFail($id);
