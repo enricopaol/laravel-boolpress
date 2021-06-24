@@ -19,5 +19,11 @@ class Post extends Model
 
     public function tags() {
         return $this->belongsToMany('App\Tag');
+
+        // Se voglio aggiungere un nome arbitrario alla tabella ponte,
+        // basta passare un secondo parametro:
+        // return $this->belongsToMany('App\Tag', 'tag_post');
     }
+
+    
 }

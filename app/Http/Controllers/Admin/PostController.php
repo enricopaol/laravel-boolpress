@@ -54,9 +54,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $request->validate($this->getValidationRules());
-        $new_post = $request->all();  
-        
-        dd($new_post);
+        $new_post = $request->all();                  
 
         $post_slug = Str::slug($new_post['title'], '-');
         $base_slug = $post_slug;
@@ -75,6 +73,10 @@ class PostController extends Controller
         $post_to_create->fill($new_post);        
         $post_to_create->save();
 
+        if(isset($new_post['tags'])) {
+            $post_to_create->tags()->sync($new_post['tags']);
+        }
+
         return redirect()->route('admin.posts.show', ['post' => $post_to_create->id]);        
     }
 
@@ -90,7 +92,8 @@ class PostController extends Controller
 
         $data = [
             'post' => $post,
-            'post_category' => $post->category
+            'post_category' => $post->category,
+            'post_tags' => $post->tags
         ];
 
         return view('admin.posts.show', $data);

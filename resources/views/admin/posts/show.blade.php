@@ -20,6 +20,18 @@
                     @endif                 
                 </p>
 
+                <p>
+                    <strong>Tags</strong>: 
+                                       
+                    @if ($post_tags)
+                        @foreach ($post_tags as $tag)
+                            <a href="#">{{ $tag->name }}</a>{{ !$loop->last ? ', ' : ''}}
+                        @endforeach                       
+                    @else
+                        nessun tag
+                    @endif                 
+                </p>
+
                 <h1>{{ ucfirst($post->title) }}</h1>
 
                 <p>{{ $post->content }}</p>
