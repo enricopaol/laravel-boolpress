@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Tag;
+
+class TagController extends Controller
+{
+   
+    public function show($slug) {
+        $tag = Tag::where('slug', '=', $slug)->first();          
+
+        $data = [
+            'tag' => $tag,
+            'posts' => $tag->posts
+        ];
+
+        return view('guest.tags.show', $data);
+    }
+}

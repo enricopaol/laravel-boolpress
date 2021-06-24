@@ -25,7 +25,7 @@
                     
                     @if ($post_tags->isNotEmpty())                    
                         @foreach ($post_tags as $tag)
-                            <a href="#">{{ $tag->name }}</a>{{ !$loop->last ? ', ' : ''}}
+                            <a href="{{ route('tags.show', ['slug' => $tag->slug]) }}">{{ $tag->name }}</a>{{ !$loop->last ? ', ' : ''}}
                         @endforeach                       
                     @else
                         nessun tag
