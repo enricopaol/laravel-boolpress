@@ -16,6 +16,8 @@ class PostController extends Controller
         foreach($posts as $post) {
             $post_tags_multi_array = $post->tags->toArray();
 
+            // Tags
+            // return: array di array o array vuoto
             $post_tags = [];
             foreach($post_tags_multi_array as $post_tags_array) {
                 $post_tags[] = [
@@ -23,9 +25,10 @@ class PostController extends Controller
                     'slug' => $post_tags_array['slug']
                 ];
             }
-
+            
+            // Category 
+            // Return: Array associativo oppure null se vuoto
             $post_category_instance = $post->category ? $post->category->toArray() : null;
-
             if (is_array($post_category_instance)) {
                 $post_category = Arr::where($post_category_instance, function($value, $key) {
                     return $key == 'name' || $key == 'slug';
@@ -33,7 +36,7 @@ class PostController extends Controller
             } else {
                 $post_category = $post_category_instance;
             }                             
-            
+                        
             $result_response[] = [
                 'id' => $post->id,
                 'title' => $post->title,
