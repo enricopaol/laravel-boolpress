@@ -25,7 +25,7 @@
 
                             <p>
                                 <strong>Categoria:</strong> 
-                                <span v-if="post.category.length > 0">@{{ post.category }}</span>
+                                <span v-if="post.category.name"><a :href="`categories/${post.category.slug}`">@{{ post.category.name }}</a></span>
                                 <span v-else>nessuna categoria</span>
                             </p>
 
@@ -34,7 +34,7 @@
 
                                 <span v-if="post.tags.length > 0">
                                     <span v-for="(tag, i) in post.tags">                                   
-                                        <span v-if="post.tags.length > 0">@{{ tag }}<span v-if="i != post.tags.length - 1">, </span></span>
+                                        <span v-if="post.tags.length > 0"><a :href="`tags/${tag.slug}`">@{{ tag.name }}</a><span v-if="i != post.tags.length - 1">, </span></span>
                                     </span>   
                                 </span>
                                      
@@ -42,7 +42,7 @@
                             </p>
 
                             <p class="card-text">@{{ cutPostDescription(index) }}...</p>
-                            <a href="#" class="btn btn-primary">Leggi il post</a>
+                            <a :href="`blog/${post.slug}`" class="btn btn-primary">Leggi il post</a>
                         </div>
                     </div>
                 </div>

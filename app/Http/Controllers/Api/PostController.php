@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
+use Illuminate\Support\Arr;
 
 class PostController extends Controller
 {
@@ -17,15 +18,25 @@ class PostController extends Controller
 
             $post_tags = [];
             foreach($post_tags_multi_array as $post_tags_array) {
-                $post_tags[] = $post_tags_array['name'];
+                $post_tags[] = [
+                    'name' => $post_tags_array['name'],
+                    'slug' => $post_tags_array['slug']
+                ];
             }
+
+            $post_category_instance = $post->category ? $post->category->toArray() : [];
+
+            $post_category = Arr::where($post_category_instance, function($value, $key) {
+                return $key == 'name' || $key == 'slug';
+            });                        
             
             $result_response[] = [
                 'id' => $post->id,
                 'title' => $post->title,
                 'content' => $post->content,
-                'category' => $post->category ? $post->category->name : '',
-                'tags' => $post_tags
+                'category' => $post_category,
+                'tags' => $post_tags,
+                'slug' => $post->slug
             ];                          
         }
 
