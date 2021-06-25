@@ -11,7 +11,7 @@ class PostController extends Controller
     public function index() {
         $posts = Post::all();        
 
-        $result = [];
+        $result_response = [];
         foreach($posts as $post) {
             $post_tags_multi_array = $post->tags->toArray();
 
@@ -20,16 +20,18 @@ class PostController extends Controller
                 $post_tags[] = $post_tags_array['name'];
             }
             
-            $post = [
+            $result_response[] = [
                 'id' => $post->id,
                 'title' => $post->title,
                 'content' => $post->content,
                 'category' => $post->category ? $post->category->name : '',
                 'tags' => $post_tags
-            ];  
-            
-            $result[] = $post;
+            ];                          
         }
+
+        $result = [
+            'posts' => $result_response
+        ];
 
         return response()->json($result);        
     }
