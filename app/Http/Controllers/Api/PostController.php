@@ -24,11 +24,15 @@ class PostController extends Controller
                 ];
             }
 
-            $post_category_instance = $post->category ? $post->category->toArray() : [];
+            $post_category_instance = $post->category ? $post->category->toArray() : null;
 
-            $post_category = Arr::where($post_category_instance, function($value, $key) {
-                return $key == 'name' || $key == 'slug';
-            });                        
+            if (is_array($post_category_instance)) {
+                $post_category = Arr::where($post_category_instance, function($value, $key) {
+                    return $key == 'name' || $key == 'slug';
+                });   
+            } else {
+                $post_category = $post_category_instance;
+            }                             
             
             $result_response[] = [
                 'id' => $post->id,

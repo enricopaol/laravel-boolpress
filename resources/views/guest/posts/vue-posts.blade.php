@@ -25,7 +25,7 @@
 
                             <p>
                                 <strong>Categoria:</strong> 
-                                <span v-if="post.category.name"><a :href="`categories/${post.category.slug}`">@{{ post.category.name }}</a></span>
+                                <span v-if="post.category"><a :href="`categories/${post.category.slug}`">@{{ post.category.name }}</a></span>
                                 <span v-else>nessuna categoria</span>
                             </p>
 
