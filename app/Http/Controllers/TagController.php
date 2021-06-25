@@ -9,7 +9,11 @@ class TagController extends Controller
 {
    
     public function show($slug) {
-        $tag = Tag::where('slug', '=', $slug)->first();          
+        $tag = Tag::where('slug', '=', $slug)->first(); 
+        
+        if(!$tag) {
+            abort('404');
+        }
 
         $data = [
             'tag' => $tag,
