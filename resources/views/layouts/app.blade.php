@@ -9,6 +9,9 @@
 
     <title>@yield('tag_title')</title>
 
+    {{-- HEADER SCRIPTS --}}
+    @yield('header_scripts')
+
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
@@ -89,5 +92,9 @@
             @yield('content')
         </main>
     </div>
+
+    {{-- FOOTER SCRIPTS --}}
+    @yield('footer_scripts')
+    
 </body>
 </html>

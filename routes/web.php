@@ -38,3 +38,5 @@ Route::get('/categories', 'CategoryController@index')->name('categories.index');
 Route::get('/categories/{slug}', 'CategoryController@show')->name('categories.show');
 
 Route::get('/tags/{slug}', 'TagController@show')->name('tags.show');
+
+Route::get('/vue-posts', 'Postcontroller@vuePosts')->name('vue.posts');
