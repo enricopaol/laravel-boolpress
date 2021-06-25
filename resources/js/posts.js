@@ -4,6 +4,12 @@ var app = new Vue({
     el: '#root',
     data: {
         posts: []
+    },   
+    methods: {
+        cutPostDescription(index) {
+            let description = this.posts[index].content;
+            return description.slice(0, 50);
+        }
     },
     mounted() {
         axios.get('http://127.0.0.1:8000/api/posts')
@@ -12,4 +18,4 @@ var app = new Vue({
                 console.log(this.posts);
             })
     }
-}) 
+});

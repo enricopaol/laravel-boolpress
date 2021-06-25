@@ -18,18 +18,37 @@
 
             <div class="row">    
 
-                <div class="col-4 mb-3" v-for="post in posts">
+                <div class="col-4 mb-3" v-for="(post, index) in posts">
                     <div class="card" style="width: 18rem;">
                         <div class="card-body">
                             <h5 class="card-title">@{{ post.title }}</h5>
-                            <p class="card-text">@{{ post.content }}...</p>
+
+                            <p>
+                                <strong>Categoria:</strong> 
+                                <span v-if="post.category.length > 0">@{{ post.category }}</span>
+                                <span v-else>nessuna categoria</span>
+                            </p>
+
+                            <p>
+                                <strong>Tags:</strong> 
+
+                                <span v-if="post.tags.length > 0">
+                                    <span v-for="(tag, i) in post.tags">                                   
+                                        <span v-if="post.tags.length > 0">@{{ tag }}<span v-if="i != post.tags.length - 1">, </span></span>
+                                    </span>   
+                                </span>
+                                     
+                                <span v-else>nessun tag</span>
+                            </p>
+
+                            <p class="card-text">@{{ cutPostDescription(index) }}...</p>
                             <a href="#" class="btn btn-primary">Leggi il post</a>
                         </div>
                     </div>
                 </div>
 
             </div>
-            
+
         </div>        
     </div>
 @endsection

@@ -2109,6 +2109,12 @@ var app = new Vue({
   data: {
     posts: []
   },
+  methods: {
+    cutPostDescription: function cutPostDescription(index) {
+      var description = this.posts[index].content;
+      return description.slice(0, 50);
+    }
+  },
   mounted: function mounted() {
     var _this = this;
 
