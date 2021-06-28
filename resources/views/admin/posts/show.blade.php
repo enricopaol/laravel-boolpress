@@ -36,6 +36,14 @@
 
                 <p>{{ $post->content }}</p>
 
+
+                @if ($post->cover)
+                    <div class="img">
+                        <img style="height: 150px; width:auto" src="{{ asset('storage/' . $post->cover) }}" alt="{{ $post->title }}">
+                    </div>
+                @endif
+                
+
                 <p><strong>Post slug: </strong>{{ $post->slug }}</p>
 
                 <a href="{{ route('admin.posts.edit', ['post' => $post->id]) }}" class="btn btn-primary">Modifica Post</a>

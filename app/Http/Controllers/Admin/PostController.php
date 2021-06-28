@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Post;
 use Illuminate\Support\Str;
 use App\Category;
@@ -54,7 +55,7 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $request->validate($this->getValidationRules());
-        $new_post = $request->all();                  
+        $new_post = $request->all();         
 
         $post_slug = Str::slug($new_post['title'], '-');
         $base_slug = $post_slug;
@@ -69,10 +70,21 @@ class PostController extends Controller
 
         $new_post['slug'] = $post_slug;
 
+        // Upload Image
+        if(isset($new_post['cover_img'])) {
+            $img_path = Storage::put('posts-cover', $new_post['cover_img']);
+            
+            if($img_path) {
+                $new_post['cover'] = $img_path;
+            }
+        }
+
         $post_to_create = new Post;
         $post_to_create->fill($new_post);        
         $post_to_create->save();
 
+
+        // Tags
         if(isset($new_post['tags'])) {
             $post_to_create->tags()->sync($new_post['tags']);
         }
@@ -188,7 +200,8 @@ class PostController extends Controller
             'title' => 'required|max:255',
             'content' => 'required|max:65000',
             'category_id' => 'nullable|exists:categories,id',
-            'tags' => 'nullable|array|exists:tags,id'
+            'tags' => 'nullable|array|exists:tags,id',
+            'cover_img' => 'image|max:2000'
         ];
     }
 }
