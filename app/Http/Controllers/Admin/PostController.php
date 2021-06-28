@@ -94,7 +94,7 @@ class PostController extends Controller
         // Send Notification Mail for the admin
         Mail::to('paolazzienrico@gmail.com')->send(new SendNewPostNotification($post_to_create));
 
-        return redirect()->route('admin.posts.show', ['post' => $post_to_create->id]);        
+        return redirect()->route('admin.posts.show', ['post' => $post_to_create->id])->with('success', 'Salvataggio avvenuto correttamente');      
     }
 
     /**
@@ -152,11 +152,12 @@ class PostController extends Controller
 
         // Se il titolo del post non cambia, lo slug rimane lo stesso di prima
         $old_post = Post::findOrFail($id);
-        $post_slug = Str::slug($modified_post['title'], '-');
+        $modified_post['slug'] = $old_post->slug;        
 
         // Se invece cambia, lo slug viene ricontrollato
         if($old_post->title != $modified_post['title']) {
-            
+
+            $post_slug = Str::slug($modified_post['title'], '-');
             $base_slug = $post_slug;
             $existing_post_slug = Post::where('slug', '=', $post_slug)->first();
             $counter = 1;
@@ -167,10 +168,9 @@ class PostController extends Controller
                 $existing_post_slug = Post::where('slug', '=', $post_slug)->first();
             }
             
+            $modified_post['slug'] = $post_slug;
         }
-
-        $modified_post['slug'] = $post_slug;  
-        
+                  
         // Upload image
         if(isset($modified_post['cover_img'])) {
             $img_path = Storage::put('posts-cover', $modified_post['cover_img']);
@@ -190,7 +190,7 @@ class PostController extends Controller
             $old_post->tags()->sync([]);
         }
 
-        return redirect()->route('admin.posts.show', ['post' => $old_post->id]);        
+        return redirect()->route('admin.posts.show', ['post' => $old_post->id])->with('success', 'Modifica avvenuta correttamente');        
     }
 
     /**

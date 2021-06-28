@@ -7,6 +7,8 @@
 @section('content')
     <div class="container">
 
+        @include('partials.success-errors-messages')
+
         <div class="card">
             <div class="card-body">
 
