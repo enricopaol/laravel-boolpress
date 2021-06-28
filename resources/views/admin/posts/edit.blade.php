@@ -79,10 +79,12 @@
                 <input type="file" class="form-control-file" id="cover_img" name="cover_img">                
             </div>
 
-            <h6>Immagine corrente:</h6>
-            <div>
-                <img style="height: 200px; width:auto" src="{{ asset('storage/' . $post->cover) }}" alt="{{ $post->title }}">
-            </div>
+            @if ($post->cover)
+                <h6>Immagine corrente:</h6>
+                <div>
+                    <img style="height: 200px; width:auto" src="{{ asset('storage/' . $post->cover) }}" alt="{{ $post->title }}">
+                </div>
+            @endif
 
             <input type="submit" class="btn btn-success" value="Salva le Modifiche">
         </form>

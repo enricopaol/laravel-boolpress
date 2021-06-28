@@ -14,6 +14,9 @@
             @foreach ($posts as $post)
                 <div class="col-4 mb-3">
                     <div class="card" style="width: 18rem;">
+                        @if ($post->cover)
+                            <img class="card-img-top" src="{{ asset('storage/' . $post->cover) }}" alt="{{ $post->title }}">
+                        @endif   
                         <div class="card-body">
                           <h5 class="card-title">{{ ucfirst($post->title) }}</h5>
                           <p class="card-text">{{ substr($post->content, 0, 50) }}...</p>

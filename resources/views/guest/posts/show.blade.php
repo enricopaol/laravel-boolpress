@@ -34,6 +34,14 @@
               <h1>{{ ucfirst($post->title) }}</h1>
 
               <p>{{ $post->content }}</p>
+
+              @if ($post->cover)
+                  <div class="img">
+                      <img style="height: 150px; width:auto" src="{{ asset('storage/' . $post->cover) }}" alt="{{ $post->title }}">
+                  </div>
+              @endif
+
+              
             </div>
           </div>
     </div>
