@@ -22,7 +22,7 @@
             </div>
         @endif
         
-        <form action="{{ route('admin.posts.update', ['post' => $post->id]) }}" method="post">
+        <form action="{{ route('admin.posts.update', ['post' => $post->id]) }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -72,6 +72,16 @@
                     </div>   
                 @endforeach
 
+            </div>
+
+            <div class="form-group">
+                <label for="cover_img">Carica immagine</label>
+                <input type="file" class="form-control-file" id="cover_img" name="cover_img">                
+            </div>
+
+            <h6>Immagine corrente:</h6>
+            <div>
+                <img style="height: 200px; width:auto" src="{{ asset('storage/' . $post->cover) }}" alt="{{ $post->title }}">
             </div>
 
             <input type="submit" class="btn btn-success" value="Salva le Modifiche">

@@ -164,7 +164,18 @@ class PostController extends Controller
             
         }
 
-        $modified_post['slug'] = $post_slug;        
+        $modified_post['slug'] = $post_slug;  
+        
+        // Upload image
+        if(isset($modified_post['cover_img'])) {
+            $img_path = Storage::put('posts-cover', $modified_post['cover_img']);
+            
+            if($img_path) {
+                $modified_post['cover'] = $img_path;
+            }
+        }
+
+        // Update All fillables
         $old_post->update($modified_post);
 
         // Tags Many to Many with Sync()
@@ -201,7 +212,7 @@ class PostController extends Controller
             'content' => 'required|max:65000',
             'category_id' => 'nullable|exists:categories,id',
             'tags' => 'nullable|array|exists:tags,id',
-            'cover_img' => 'image|max:2000'
+            'cover_img' => 'nullable|image|max:3000'
         ];
     }
 }
