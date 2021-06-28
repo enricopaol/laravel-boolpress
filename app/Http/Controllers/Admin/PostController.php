@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 use App\Post;
 use Illuminate\Support\Str;
 use App\Category;
 use App\Tag;
+use App\Mail\SendNewPostNotification;
 
 class PostController extends Controller
 {
@@ -88,6 +90,9 @@ class PostController extends Controller
         if(isset($new_post['tags'])) {
             $post_to_create->tags()->sync($new_post['tags']);
         }
+
+        // Send Notification Mail for the admin
+        Mail::to('paolazzienrico@gmail.com')->send(new SendNewPostNotification($post_to_create));
 
         return redirect()->route('admin.posts.show', ['post' => $post_to_create->id]);        
     }
